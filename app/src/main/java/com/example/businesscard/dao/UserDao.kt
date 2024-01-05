@@ -1,30 +1,23 @@
 package com.example.businesscard.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
 import com.example.businesscard.entity.User
 
 @Dao
 interface UserDao {
-    @Query("SELECT * FROM user")
-    fun getAll(): List<User>
-
-    @Query("SELECT * FROM user WHERE email LIKE :email AND password LIKE :password")
-    fun loginUser(email: String, password: String) : LiveData<User>
-
-    @Insert
-    fun registerUser(users: User)
-
-    @Delete
-    fun delete(users: User)
-
-    @Update
-    fun update(users: User)
-
-    @Query("SELECT * FROM user WHERE uid = :uid")
-    fun get(uid: String) : User
+    // ユーザー登録
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insertUser(user: User): Long
+    // 電話番号とパスワードが存在するか確認
+    @Query("SELECT * FROM User WHERE phone LIKE :phone AND password LIKE :password")
+    fun readLoginData(phone: String, password: String):User
+    // ユーザーの情報取得
+    @Query("select * from user where id Like :id")
+    fun getUserDataDetails(id:Long):User
+    // ユーザー情報を消す
+    @Query("DELETE FROM User WHERE id = :id")
+    fun deleteUser(id: Long): Int
 }
