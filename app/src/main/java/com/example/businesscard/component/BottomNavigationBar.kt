@@ -29,15 +29,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.businesscard.dao.UserDao
-import com.example.businesscard.dao.UserDaoImpl
 import com.example.businesscard.screen.Add
 import com.example.businesscard.screen.Card
 import com.example.businesscard.screen.Login
 import com.example.businesscard.screen.Profile
-import com.example.businesscard.screen.SignupScreen
-import com.example.businesscard.viewmodel.SignupViewModel
-import com.example.businesscard.database.AppDatabase as AppDatabase
 
 data class BottomNavigationItem(
     val title: String,
@@ -50,7 +45,7 @@ data class BottomNavigationItem(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BusinessCardApp() {
+fun BottomNavigationBar() {
     val navController = rememberNavController()
     val items = listOf(
         BottomNavigationItem(
@@ -83,34 +78,32 @@ fun BusinessCardApp() {
             bottomBar = {
                 NavigationBar {
                     items.forEachIndexed { index, item ->
-                        if (navController.currentDestination?.route == "login") {
-                            NavigationBarItem(
-                                selected = selectedItemIndex == index,
-                                onClick = {
-                                    selectedItemIndex = index
-                                    navController.navigate(item.title)
-                                },
-                                icon = {
-                                    BadgedBox(
-                                        badge ={
-                                            if(item.badgeCount != null){
-                                                Badge {
-                                                    Text(text= item.badgeCount.toString())
-                                                }
-                                            }else if (item.hasNews){
-                                                Badge()
+                        NavigationBarItem(
+                            selected = selectedItemIndex == index,
+                            onClick = {
+                                selectedItemIndex = index
+                                navController.navigate(item.title)
+                            },
+                            icon = {
+                                BadgedBox(
+                                    badge ={
+                                        if(item.badgeCount != null){
+                                            Badge {
+                                                Text(text= item.badgeCount.toString())
                                             }
+                                        }else if (item.hasNews){
+                                            Badge()
                                         }
-                                    ) {
-                                        Icon(
-                                            imageVector = if (index == selectedItemIndex){
-                                                item.selectedIcon
-                                            }else item.unselectedIcon,
-                                            contentDescription = "Profile")
                                     }
+                                ) {
+                                    Icon(
+                                        imageVector = if (index == selectedItemIndex){
+                                            item.selectedIcon
+                                        }else item.unselectedIcon,
+                                        contentDescription = "Profile")
                                 }
-                            )
-                        }
+                            }
+                        )
                     }
                 }
             }
@@ -127,7 +120,7 @@ fun BusinessCardNavHost(
     navController: NavHostController
 ) {
     val activity = (LocalContext.current as Activity)
-    NavHost(navController = navController, startDestination = "signup" ){
+    NavHost(navController = navController, startDestination = "card" ){
         composable("card"){
             Card()
         }
@@ -140,10 +133,10 @@ fun BusinessCardNavHost(
         composable("login"){
             Login()
         }
-        composable("signup"){
-            val userDao = UserDaoImpl()
-            val signupViewModel = SignupViewModel(userDao)
-            SignupScreen(signupViewModel)
-        }
+//        composable("signup"){
+//            val userDao = UserDao()
+//            val signupViewModel = SignupViewModel(userDao)
+//            SignupScreen(signupViewModel)
+//        }
     }
 }

@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
+import com.example.businesscard.component.BottomNavigationBar
 import com.example.businesscard.ui.theme.BusinessCardTheme
-import com.example.businesscard.component.BusinessCardApp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,9 +17,9 @@ class MainActivity : ComponentActivity() {
             BusinessCardTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
-                    BusinessCardApp()
+                    BottomNavigationBar()
                 }
             }
         }
