@@ -31,7 +31,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.businesscard.screen.Add
 import com.example.businesscard.screen.Card
-import com.example.businesscard.screen.Login
 import com.example.businesscard.screen.Profile
 
 data class BottomNavigationItem(
@@ -128,15 +127,7 @@ fun BusinessCardNavHost(
             Add()
         }
         composable("profile"){
-            Profile(navController = navController)
+            Profile()
         }
-        composable("login"){
-            Login()
-        }
-//        composable("signup"){
-//            val userDao = UserDao()
-//            val signupViewModel = SignupViewModel(userDao)
-//            SignupScreen(signupViewModel)
-//        }
     }
 }
